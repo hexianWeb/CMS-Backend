@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "core-js": "^3.8.3",
+    "element-plus": "^2.2.30",
+    "pinia": "^2.0.30",
     "vue": "^3.2.13",
     "vue-router": "^4.1.6"
   },
@@ -35,7 +37,9 @@
     "less-loader": "^8.0.0",
     "prettier": "^2.8.4",
     "prettier-eslint": "^15.0.1",
-    "typescript": "~4.5.5"
+    "typescript": "~4.5.5",
+    "unplugin-auto-import": "^0.14.2",
+    "unplugin-vue-components": "^0.23.0"
   },
   "config": {
     "commitizen": {
