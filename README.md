@@ -265,3 +265,35 @@ module.exports = {
 ```shell
 npx husky add .husky/commit-msg "npx --no-install commitlint --edit $1"
 ```
+
+#### 2.4.3 element-plus 自动引入（推荐）
+
+```bash
+npm install -D unplugin-vue-components unplugin-auto-import
+```
+
+配置 vue.config.js
+项目根目录新建（如无的话）vue.config.js
+
+```javascript
+const AutoImport = require('unplugin-auto-import/webpack');
+const Components = require('unplugin-vue-components/webpack');
+const { ElementPlusResolver } = require('unplugin-vue-components/resolvers');
+
+module.exports = {
+  configureWebpack: {
+    devServer: {
+      port: 8888,
+      open: true
+    },
+    plugins: [
+      AutoImport({
+        resolvers: [ElementPlusResolver()]
+      }),
+      Components({
+        resolvers: [ElementPlusResolver()]
+      })
+    ]
+  }
+};
+```
