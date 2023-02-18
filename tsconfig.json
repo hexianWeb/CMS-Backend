@@ -1,16 +1,25 @@
 {
   "compilerOptions": {
+    // 目标代码(ts -> js(es5/es6/es7))
     "target": "esnext",
+    // 模块化方案 commonjs require/module.exports/es module
     "module": "esnext",
+    // 严格检查模式
     "strict": true,
+    // 对jsx进行怎么样的处理
     "jsx": "preserve",
+    // 按照node的方式去解析模块
     "moduleResolution": "node",
+    // 跳过对库的类型监测 有利于减少lib之间的类型冲突
     "skipLibCheck": true,
+
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "useDefineForClassFields": true,
+    // 是否生成映射文件 ts->js
     "sourceMap": true,
+    // 文件路径解析时基本的映射路径
     "baseUrl": ".",
     "types": ["webpack-env"],
     "paths": {
@@ -29,7 +38,9 @@
     "src/**/*.tsx",
     "src/**/*.vue",
     "tests/**/*.ts",
-    "tests/**/*.tsx"
+    "tests/**/*.tsx",
+    "./auto-imports.d.ts",
+     "src/**/*.d.ts"
   ],
   "exclude": ["node_modules"]
 }

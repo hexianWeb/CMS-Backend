@@ -8,6 +8,7 @@ interface RequestInterceptors {
 }
 interface RequestConfig extends AxiosRequestConfig {
   interceptors?: RequestInterceptors;
+  showLoading?: boolean;
 }
 
 export { RequestInterceptors, RequestConfig };

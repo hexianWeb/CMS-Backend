@@ -1,12 +1,11 @@
 import Request from './request';
 import { BASE_URL, TIME_OUT } from './request/config';
 
-const request = new Request({
+const token_request = new Request({
   baseURL: BASE_URL,
   timeout: TIME_OUT,
   interceptors: {
     requestInterceptor: (config) => {
-      console.log('请求成功拦截');
       return config;
     },
     requestInterceptorCatch: (error) => {
@@ -24,4 +23,4 @@ const request = new Request({
   }
 });
 
-export default request;
+export default token_request;
