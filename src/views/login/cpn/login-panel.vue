@@ -20,7 +20,7 @@
             <el-input v-model="accountData.name" />
           </el-form-item>
           <el-form-item label="密码" prop="password">
-            <el-input v-model="accountData.password" />
+            <el-input v-model="accountData.password" show-password />
           </el-form-item>
         </el-tab-pane>
         <!-- 手机验证码登录验证 -->
@@ -57,7 +57,7 @@
 import { reactive, ref } from 'vue';
 import type { FormInstance, FormRules } from 'element-plus';
 import type { TabsPaneContext } from 'element-plus/es/tokens/tabs';
-
+import localCache from '@/utils/cache';
 const activeTabs = ref('first');
 
 const handleClick = (tab: TabsPaneContext, event: Event) => {
@@ -65,8 +65,8 @@ const handleClick = (tab: TabsPaneContext, event: Event) => {
 };
 
 const accountData = reactive({
-  name: 'hexian',
-  password: '123456'
+  name: localCache.getCache('name') ?? '',
+  password: localCache.getCache('password') ?? ''
 });
 
 const phoneData = reactive({
@@ -76,10 +76,6 @@ const phoneData = reactive({
 
 const isRemember = ref(true);
 
-// const loginRules = {
-//   name: [{ required: true, message: '请输入账号~', trigger: 'change' }],
-//   password: [{ required: true, message: '请输入密码~', trigger: 'blur' }]
-// };
 // 前端登录只需要判断用户名密码存在与否即可，无需强度校验，后续会说到。
 const loginRules = reactive<FormRules>({
   name: [{ required: true, message: '账户不能为空', trigger: 'blur' }],
@@ -93,6 +89,14 @@ const handleLoginClick = async (formEl: FormInstance | undefined) => {
   await formEl.validate(async (valid: boolean, fields) => {
     if (valid) {
       // 表单校验成功后，业务逻辑
+      // 1.缓存用户名与密码
+      if (isRemember.value) {
+        localCache.setCache('name', accountData.name);
+        localCache.setCache('password', accountData.password);
+      } else {
+        localCache.deleteCache('name');
+        localCache.deleteCache('password');
+      }
       console.log('submit!');
     } else {
       console.log('error submit!', fields);
