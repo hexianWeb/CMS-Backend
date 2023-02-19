@@ -40,7 +40,7 @@
     "tests/**/*.ts",
     "tests/**/*.tsx",
     "./auto-imports.d.ts",
-     "src/**/*.d.ts"
+     "**/*.d.ts"
   ],
   "exclude": ["node_modules"]
 }
