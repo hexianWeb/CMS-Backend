@@ -37,7 +37,8 @@ module.exports = defineConfig({
         '@libs': resolve('src/libs'), // 本地库
         '@plugins': resolve('src/plugins'), // 本地插件
         '@cp': resolve('src/components'), // 公共组件
-        '@views': resolve('src/views') // 路由组件
+        '@views': resolve('src/views'), // 路由组件
+        '@store': resolve('src/stores') // pinia组件
       }
     }
   }

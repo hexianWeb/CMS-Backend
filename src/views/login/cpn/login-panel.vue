@@ -54,10 +54,10 @@
   </div>
 </template>
 <script setup lang="ts">
-import { reactive, ref } from 'vue';
 import type { FormInstance, FormRules } from 'element-plus';
 import type { TabsPaneContext } from 'element-plus/es/tokens/tabs';
 import localCache from '@/utils/cache';
+import { useUserStore } from '@/stores/modules/login';
 const activeTabs = ref('first');
 
 const handleClick = (tab: TabsPaneContext, event: Event) => {
@@ -97,7 +97,13 @@ const handleLoginClick = async (formEl: FormInstance | undefined) => {
         localCache.deleteCache('name');
         localCache.deleteCache('password');
       }
-      console.log('submit!');
+
+      // 2.登录 获取token
+      const userStore = useUserStore();
+      // eslint-disable-next-line no-unused-vars
+      const result = await userStore.login(accountData);
+      console.log(userStore.$state.token);
+      console.log('已经获取token');
     } else {
       console.log('error submit!', fields);
     }

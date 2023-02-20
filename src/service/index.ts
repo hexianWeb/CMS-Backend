@@ -1,7 +1,7 @@
 import Request from './request';
 import { BASE_URL, TIME_OUT } from './request/config';
 
-const token_request = new Request({
+const request = new Request({
   baseURL: BASE_URL,
   timeout: TIME_OUT,
   interceptors: {
@@ -23,4 +23,4 @@ const token_request = new Request({
   }
 });
 
-export default token_request;
+export default request;
