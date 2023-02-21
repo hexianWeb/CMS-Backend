@@ -9,13 +9,7 @@ import localCache from '@/utils/cache';
 import { TOKEN_KEY } from '@/constants/cache_keys';
 import { Account } from '@/service/login/type';
 import { accountLoginRequest } from '@/service/login/login';
-// import * as loginService from '@/service/login/login';
-interface UserState {
-  token?: string;
-  // userInfo?: UserInfo;
-  // userMenus?: UserMenu[];
-  // userPermissions?: string[];
-}
+import { UserState } from './type';
 
 export function setupUser() {
   const userStore = useUserStore();
