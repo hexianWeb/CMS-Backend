@@ -3,7 +3,8 @@ import type { AxiosInstance } from 'axios';
 import { RequestInterceptors, RequestConfig } from '../types';
 import { ElLoading } from 'element-plus';
 import { LoadingInstance } from 'element-plus/lib/components/loading/src/loading';
-
+import localCache from '@/utils/cache';
+import { TOKEN_KEY } from '@/constants/cache_keys';
 const DEFAULT_LOADING = true;
 class Request {
   instance: AxiosInstance;
@@ -32,10 +33,10 @@ class Request {
     // 请求拦截器 注入token
     this.instance.interceptors.request.use(
       (config) => {
-        console.log('请求失败');
-        const token = '';
+        //fix: 需修复如果不存在的情况
+        const token = localCache.getCache(TOKEN_KEY);
         if (token) {
-          config.headers.Authorization = `Bearer ${token}`;
+          config.headers!.Authorization = `Bearer ${token}`;
         }
         if (this.showLoading) {
           // Loading组件
@@ -57,7 +58,6 @@ class Request {
     // 响应拦截器
     this.instance.interceptors.response.use(
       (res) => {
-        console.log('响应成功');
         this.loadingInstance?.close();
         if (res.data.code === 0) {
           return res.data.data;

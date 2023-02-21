@@ -8,3 +8,19 @@ export interface LoginInfo {
   token: string;
   name: string;
 }
+
+export interface GetUserById {
+  id: string | number;
+}
+
+export interface UserInfo {
+  id: string | number;
+  name: string;
+  realname: string;
+  cellphone: number;
+  enable: number;
+  createAt: Date;
+  updateAt: Date;
+  //   role: Role
+  //   department: Department
+}

@@ -1,15 +1,28 @@
+/* eslint-disable no-unused-vars */
 import request from '../index';
-import { Account, LoginInfo } from './type';
+import { Account, GetUserById, LoginInfo, UserInfo } from './type';
 
-// eslint-disable-next-line no-unused-vars
-enum LoginAPI {
-  // eslint-disable-next-line no-unused-vars
-  AccountLogin = '/login'
+export enum LoginAPI {
+  AccountLogin = '/login',
+  UserInfo = '/users/'
 }
 
+// 登录模块所有api
+
+/**
+ * 登录接口
+ * @param account 登录信息
+ * @returns token
+ */
 export function accountLoginRequest(account: Account) {
   return request.post<LoginInfo>({
     url: LoginAPI.AccountLogin,
     data: account
+  });
+}
+
+export function getUserById(params: GetUserById) {
+  return request.get<UserInfo>({
+    url: LoginAPI.UserInfo + params.id
   });
 }

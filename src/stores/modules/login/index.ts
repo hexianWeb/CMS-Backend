@@ -6,10 +6,10 @@
  */
 
 import localCache from '@/utils/cache';
-import { TOKEN_KEY } from '@/constants/cache_keys';
+import { TOKEN_KEY, USER_INFO_KEY } from '@/constants/cache_keys';
 import { Account } from '@/service/login/type';
-import { accountLoginRequest } from '@/service/login/login';
-import { UserState } from './type';
+import { accountLoginRequest, getUserById } from '@/service/login/login';
+import { UserInfo, UserState } from './type';
 
 export function setupUser() {
   const userStore = useUserStore();
@@ -32,10 +32,19 @@ export const useUserStore = defineStore({
       this.token = token;
       localCache.setCache(TOKEN_KEY, token);
     },
+    setUserInfo(userInfo: UserInfo) {
+      this.userInfo = userInfo;
+      localCache.setCache(USER_INFO_KEY, userInfo);
+    },
     async login(account: Account) {
+      // 1.登录认证通过 获取用户token
       const { id, token } = await accountLoginRequest(account);
       console.log(id, token);
       this.setToken(token);
+
+      // 2.获取userInfo
+      const UserInfo = await getUserById({ id });
+      this.setUserInfo(UserInfo);
     }
   }
 });
