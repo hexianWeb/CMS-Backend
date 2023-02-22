@@ -6,10 +6,11 @@
  */
 
 import localCache from '@/utils/cache';
-import { TOKEN_KEY, USER_INFO_KEY } from '@/constants/cache_keys';
-import { Account } from '@/service/login/type';
-import { accountLoginRequest, getUserById } from '@/service/login/login';
+import { TOKEN_KEY, USER_INFO_KEY, USER_MENUS_KEY } from '@/constants/cache_keys';
+import { Account, UserMenus } from '@/service/login/type';
+import { accountLoginRequest, getUserById, getUserMenusById } from '@/service/login/login';
 import { UserInfo, UserState } from './type';
+import router from '@/router';
 
 export function setupUser() {
   const userStore = useUserStore();
@@ -20,11 +21,19 @@ export function setupUser() {
 export const useUserStore = defineStore({
   id: 'user',
   state: (): UserState => ({
-    token: undefined
+    token: undefined,
+    userInfo: undefined,
+    userMenus: undefined
   }),
   getters: {
     getToken(): string | null {
       return this.token || localCache.getCache(TOKEN_KEY);
+    },
+    getUserInfo(): UserInfo {
+      return this.userInfo || JSON.parse(localCache.getCache(USER_INFO_KEY) || '');
+    },
+    getUserMenus(): UserMenus[] {
+      return this.userMenus || JSON.parse(localCache.getCache(USER_MENUS_KEY) || '');
     }
   },
   actions: {
@@ -36,15 +45,25 @@ export const useUserStore = defineStore({
       this.userInfo = userInfo;
       localCache.setCache(USER_INFO_KEY, userInfo);
     },
+    setUserMenu(userMenus: UserMenus[]) {
+      this.userMenus = userMenus;
+      localCache.setCache(USER_MENUS_KEY, userMenus);
+    },
     async login(account: Account) {
       // 1.登录认证通过 获取用户token
       const { id, token } = await accountLoginRequest(account);
-      console.log(id, token);
       this.setToken(token);
 
       // 2.获取userInfo
       const UserInfo = await getUserById({ id });
       this.setUserInfo(UserInfo);
+
+      // 3.请求用户菜单
+      const UserMenusRes = await getUserMenusById({ id });
+      this.setUserMenu(UserMenusRes);
+
+      // 4.跳转到首页
+      router.push('/main');
     }
   }
 });

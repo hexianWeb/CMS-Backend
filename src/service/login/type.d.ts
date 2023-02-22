@@ -24,3 +24,15 @@ export interface UserInfo {
   //   role: Role
   //   department: Department
 }
+
+export interface UserMenus {
+  icon?: string;
+  id: number;
+  name: string;
+  children?: UserMenus[];
+  sort?: number;
+  type: number;
+  url: string;
+  parentId: number;
+  permission: string;
+}
