@@ -30,10 +30,16 @@ export const useUserStore = defineStore({
       return this.token || localCache.getCache(TOKEN_KEY);
     },
     getUserInfo(): UserInfo {
-      return this.userInfo || JSON.parse(localCache.getCache(USER_INFO_KEY) || '');
+      return this.userInfo || localCache.getCache(USER_INFO_KEY) || '';
     },
     getUserMenus(): UserMenus[] {
-      return this.userMenus || JSON.parse(localCache.getCache(USER_MENUS_KEY) || '');
+      // EP-v版本为2.2.30
+      let icons = ['Monitor', 'Setting', 'ShoppingBag', 'ChatDotRound'];
+      const menus = this.userMenus || localCache.getCache(USER_MENUS_KEY) || '';
+      for (const key in menus) {
+        menus[key].icon = icons[Number(key)];
+      }
+      return menus;
     }
   },
   actions: {
