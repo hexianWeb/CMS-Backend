@@ -33,7 +33,8 @@
               <span>{{ menu.name }}</span>
             </template>
             <template v-for="submenu in menu.children" :key="submenu.id">
-              <el-menu-item :index="submenu.id + ''">
+              <!-- 绑定路由跳转事件在二级菜单上 -->
+              <el-menu-item :index="submenu.id + ''" @click="handleItemClick(submenu)">
                 {{ submenu.name }}
               </el-menu-item>
             </template>
@@ -45,9 +46,44 @@
 </template>
 <script setup lang="ts">
 import { useUserStore } from '@/stores/modules/login';
+import { UserMenus } from '@/service/login/type';
+import { isUrl } from '@/utils/common';
+import { getMenuByPath } from '@/utils/menu';
 // 获取menus数据
 const menus = useUserStore().getUserMenus;
-// const router = useRouter();
+const router = useRouter();
+
+const route = useRoute();
+
+const currentActiveMenuIndex = ref<String>('');
+
+// 监听路由地址是否存在变化
+watch(
+  () => route.path,
+  () => {
+    _selectCurrentMenu();
+  }
+);
+
+// 挂载时 根据当前URL已有的路径 获取相应MENU
+onMounted(() => {
+  _selectCurrentMenu();
+});
+
+const _selectCurrentMenu = () => {
+  const currentMenu = getMenuByPath(menus, route.path) as UserMenus;
+  currentActiveMenuIndex.value = String(`${currentMenu?.id}`);
+};
+const handleItemClick = (subMenu: UserMenus) => {
+  currentActiveMenuIndex.value = String(subMenu.id);
+  if (isUrl(subMenu.url)) {
+    window.open(subMenu.url);
+  } else {
+    router.push({
+      path: subMenu.url || '/notfound'
+    });
+  }
+};
 </script>
 <style lang="less" scoped>
 @import '@/assets/css/_var.less';

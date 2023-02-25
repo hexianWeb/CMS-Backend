@@ -100,7 +100,7 @@ const handleLoginClick = async (formEl: FormInstance | undefined) => {
 
       // 2.登录 获取token
       const userStore = useUserStore();
-      // eslint-disable-next-line no-unused-vars
+      // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
       const result = await userStore.login(accountData);
       console.log(userStore.$state.token);
       console.log('已经获取token');
