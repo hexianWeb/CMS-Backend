@@ -5,7 +5,7 @@
       <!-- Logo -->
       <div class="logo">
         <img class="img" src="@img/logo.png" alt="logo" />
-        <span class="title">Vue3+TS后台管理</span>
+        <span class="title" v-show="!isCollapse">Vue3+TS后台管理</span>
       </div>
 
       <!-- 菜单部分 -->
@@ -16,6 +16,7 @@
         active-text-color="#ffd04b"
         background-color="#001529"
         text-color="#B7BDC3"
+        :collapse="isCollapse"
       >
         <template v-for="menu in menus" :key="menu.id">
           <!-- CASE1： 一级菜单 -->
@@ -49,8 +50,18 @@ import { useUserStore } from '@/stores/modules/login';
 import { UserMenus } from '@/service/login/type';
 import { isUrl } from '@/utils/common';
 import { getMenuByPath } from '@/utils/menu';
+
+// 父子组件传值 伸展
+defineProps({
+  isCollapse: {
+    type: Boolean,
+    defalut: false,
+    require: true
+  }
+});
 // 获取menus数据
 const menus = useUserStore().getUserMenus;
+
 const router = useRouter();
 
 const route = useRoute();

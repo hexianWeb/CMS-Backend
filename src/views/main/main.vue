@@ -2,12 +2,14 @@
 <template>
   <div class="main">
     <el-container class="main-content">
-      <el-aside width="200px">
-        <navMenu />
+      <el-aside :width="isCollapse ? '62px' : '200px'">
+        <navMenu :isCollapse="isCollapse" />
       </el-aside>
 
       <el-container class="page">
-        <el-header class="page-header">Header</el-header>
+        <el-header class="page-header">
+          <navHeader @foldClick="handleFoldClick" />
+        </el-header>
         <el-container class="page-content">
           <el-main>Main</el-main>
         </el-container>
@@ -18,6 +20,13 @@
 <script lang="ts" setup>
 // 引入 目录组件
 import navMenu from '@cp/nav-menu/src/index.vue';
+import navHeader from '@cp/nav-header/src/index.vue';
+
+const isCollapse = ref<Boolean>(false);
+
+const handleFoldClick = (isFold: Boolean) => {
+  isCollapse.value = isFold;
+};
 </script>
 <style lang="less" scoped>
 @import '@/assets/css/_var.less';
