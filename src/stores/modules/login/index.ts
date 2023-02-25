@@ -7,9 +7,9 @@
 
 import localCache from '@/utils/cache';
 import { TOKEN_KEY, USER_INFO_KEY, USER_MENUS_KEY } from '@/constants/cache_keys';
-import { Account, UserMenus } from '@/service/login/type';
+import { Account, UserMenus, UserInfo } from '@/service/login/type';
 import { accountLoginRequest, getUserById, getUserMenusById } from '@/service/login/login';
-import { UserInfo, UserState } from './type';
+import { UserState } from './type';
 import router from '@/router';
 
 export function setupUser() {
