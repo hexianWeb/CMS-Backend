@@ -45,7 +45,7 @@
     </div>
   </div>
 </template>
-<script setup lang="ts">
+<script setup lang="ts" name="nav-menu">
 import { useUserStore } from '@/stores/modules/login';
 import { UserMenus } from '@/service/login/type';
 import { isUrl } from '@/utils/common';

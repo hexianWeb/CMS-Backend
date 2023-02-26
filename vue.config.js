@@ -3,10 +3,15 @@ const AutoImport = require('unplugin-auto-import/webpack');
 const Components = require('unplugin-vue-components/webpack');
 const { ElementPlusResolver } = require('unplugin-vue-components/resolvers');
 const { resolve } = require('path');
+
+// 安装的插件
+// import VueSetupExtend from 'vite-plugin-vue-setup-extend';
+
 module.exports = defineConfig({
   transpileDependencies: true,
   configureWebpack: {
     plugins: [
+      // VueSetupExtend(),
       AutoImport({
         // 自动按需引入 vue 需要额外的import vue的api。比如使用ref时，需要先import { ref } from 'vue'。
         imports: ['vue', 'vue-router', 'pinia'],

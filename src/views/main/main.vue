@@ -17,7 +17,7 @@
     </el-container>
   </div>
 </template>
-<script lang="ts" setup>
+<script lang="ts" setup name="main">
 // 引入 目录组件
 import navMenu from '@cp/nav-menu/src/index.vue';
 import navHeader from '@cp/nav-header/src/index.vue';

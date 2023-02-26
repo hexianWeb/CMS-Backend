@@ -9,7 +9,7 @@
     </div> -->
   </div>
 </template>
-<script setup lang="ts">
+<script setup lang="ts" name="nav-header">
 //使用defineEmits代替$emit
 const emit = defineEmits(['foldClick']); //这里最好写出来
 const isFold = ref<Boolean>(false);
