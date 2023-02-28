@@ -11,7 +11,7 @@
           <navHeader @foldClick="handleFoldClick" />
         </el-header>
         <el-container class="page-content">
-          <el-main>Main</el-main>
+          <el-main><RouterView></RouterView></el-main>
         </el-container>
       </el-container>
     </el-container>

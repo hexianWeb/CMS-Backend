@@ -11,6 +11,7 @@ import { Account, UserMenus, UserInfo } from '@/service/login/type';
 import { accountLoginRequest, getUserById, getUserMenusById } from '@/service/login/login';
 import { UserState } from './type';
 import router from '@/router';
+import { mapMenusToRoutes } from '@/utils/map-menus';
 
 export function setupUser() {
   const userStore = useUserStore();
@@ -60,14 +61,19 @@ export const useUserStore = defineStore({
       const { id, token } = await accountLoginRequest(account);
       this.setToken(token);
 
-      // 2.获取userInfo
+      // 2.获取,并设置 userInfo
       const UserInfo = await getUserById({ id });
       this.setUserInfo(UserInfo);
 
-      // 3.请求用户菜单
+      // 3.获取并设置 请求用户菜单
       const UserMenusRes = await getUserMenusById({ id });
       this.setUserMenu(UserMenusRes);
-
+      // debugger;
+      const routes = mapMenusToRoutes(UserMenusRes);
+      // 注册UserMenu的所有路由
+      routes.forEach((route) => {
+        router.addRoute('main', route);
+      });
       // 4.跳转到首页
       router.push('/main');
     }
