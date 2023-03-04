@@ -131,9 +131,6 @@ const handleLoginClick = async (formEl: FormInstance | undefined) => {
   .login-btn {
     width: 100%;
   }
-  // ::v-deep .el-form-item__content {
-  //   margin-left: 0px !important;
-  // }
   .verify-code {
     display: flex;
 

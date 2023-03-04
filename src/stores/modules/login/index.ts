@@ -11,7 +11,8 @@ import { Account, UserMenus, UserInfo } from '@/service/login/type';
 import { accountLoginRequest, getUserById, getUserMenusById } from '@/service/login/login';
 import { UserState } from './type';
 import router from '@/router';
-import { mapMenusToRoutes } from '@/utils/map-menus';
+import { getFirstMenuPath } from '@/utils/menu';
+// import { mapMenusToRoutes } from '@/utils/map-menus';
 
 export function setupUser() {
   const userStore = useUserStore();
@@ -34,7 +35,7 @@ export const useUserStore = defineStore({
       return this.userInfo || localCache.getCache(USER_INFO_KEY) || '';
     },
     getUserMenus(): UserMenus[] {
-      // EP-v版本为2.2.30
+      // EP-v版本为2.2.30 已经不再支持i标签class属性使用图标
       let icons = ['Monitor', 'Setting', 'ShoppingBag', 'ChatDotRound'];
       const menus = this.userMenus || localCache.getCache(USER_MENUS_KEY) || '';
       for (const key in menus) {
@@ -68,14 +69,10 @@ export const useUserStore = defineStore({
       // 3.获取并设置 请求用户菜单
       const UserMenusRes = await getUserMenusById({ id });
       this.setUserMenu(UserMenusRes);
-      // debugger;
-      const routes = mapMenusToRoutes(UserMenusRes);
-      // 注册UserMenu的所有路由
-      routes.forEach((route) => {
-        router.addRoute('main', route);
-      });
-      // 4.跳转到首页
-      router.push('/main');
+
+      // 4.跳转到用户第一个菜单 配合 router/guard 的 permission
+      const firstMenu = getFirstMenuPath(UserMenusRes);
+      router.push(firstMenu!.url);
     }
   }
 });

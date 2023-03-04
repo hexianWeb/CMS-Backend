@@ -7,6 +7,7 @@ import 'normalize.css';
 import './assets/css/index.less';
 
 import * as ElementPlusIconsVue from '@element-plus/icons-vue';
+import { setupRouterGuard } from './router/guard';
 
 const app = createApp(App);
 // 注册图标组件（不推荐 推荐自动引入） https://blog.csdn.net/zhoudingding/article/details/127237942
@@ -18,5 +19,8 @@ app.use(router).use(store);
 
 // setup store
 setupStore();
+
+// setup permission
+setupRouterGuard();
 
 app.mount('#app');
