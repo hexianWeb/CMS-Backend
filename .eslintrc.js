@@ -16,7 +16,9 @@ module.exports = {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'prettier/prettier': 'warn',
-    'vue/multi-word-component-names': 'off'
+    'vue/multi-word-component-names': 'off',
+    'no-unused-vars': ['warn', { vars: 'all', args: 'after-used', ignoreRestSiblings: false }],
+    'vue/no-setup-props-destructure': ['warn', { vars: 'all', args: 'after-used', ignoreRestSiblings: false }]
   },
   globals: {
     defineProps: 'readonly',
