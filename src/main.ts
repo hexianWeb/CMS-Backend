@@ -15,12 +15,12 @@ const app = createApp(App);
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component);
 }
-app.use(router).use(store);
+app.use(store);
 
 // setup store
 setupStore();
-
 // setup permission
 setupRouterGuard();
-
+// 注意 router在每次热更新重启之后会做一次当前匹配 ，所以为了防止path出现component NotFound情况 推荐将router放在最后
+app.use(router);
 app.mount('#app');

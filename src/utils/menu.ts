@@ -1,3 +1,4 @@
+import { BreadcrumbProp } from '@/base-ui/breadcrumb';
 import type { UserMenus } from '@/service/login/type';
 
 /**
@@ -11,9 +12,27 @@ export const getMenuByPath = (userMenus: UserMenus[], pathName: string): UserMen
   return currentMenu;
 };
 
+/**
+ * 获取该用户的第一个目录
+ * @param userMenus
+ * @returns
+ */
 export const getFirstMenuPath = (userMenus: UserMenus[]): UserMenus | void => {
   const firstMenu = __recursiveFirstMenu(userMenus);
   return firstMenu;
+};
+
+/**
+ * 获取用户当前模块的面包屑
+ * @param userMenus
+ * @param pathName
+ * @param breadCrumbs
+ * @returns
+ */
+export const getBreadCrumbsByPath = (userMenus: UserMenus[], pathName: string): BreadcrumbProp[] => {
+  const breadcrumbs: BreadcrumbProp[] = [];
+  __recursiveMenuByPath(userMenus, pathName, breadcrumbs);
+  return breadcrumbs.reverse();
 };
 
 const __recursiveFirstMenu = (menus: UserMenus[]): UserMenus | void => {
@@ -34,15 +53,33 @@ const __recursiveFirstMenu = (menus: UserMenus[]): UserMenus | void => {
  * @param pathName
  * @returns
  */
-const __recursiveMenuByPath = (menus: UserMenus[], pathName: string): UserMenus | void => {
+const __recursiveMenuByPath = (
+  menus: UserMenus[],
+  pathName: string,
+  breadCrumbs?: BreadcrumbProp[]
+): UserMenus | void => {
   for (let i = 0; i < menus.length; i++) {
     const menu = menus[i];
     // 递归查找目录
     if (menu.type === 1) {
       const submenu = menu?.children || [];
-      const m = __recursiveMenuByPath(submenu, pathName);
-      if (m) return m;
+      const m = __recursiveMenuByPath(submenu, pathName, breadCrumbs);
+      if (m) {
+        if (breadCrumbs) {
+          breadCrumbs?.push({
+            name: menu.name,
+            path: '' //一级路由 不可点击 不应该增加path
+          });
+        }
+        return m;
+      }
     } else if (menu.type === 2 && menu.url === pathName) {
+      if (breadCrumbs) {
+        breadCrumbs.push({
+          name: menu.name,
+          path: menu.url
+        });
+      }
       return menu;
     }
   }
