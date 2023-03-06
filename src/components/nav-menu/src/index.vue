@@ -11,7 +11,7 @@
       <!-- 菜单部分 -->
       <el-menu
         :unique-opened="false"
-        default-active="2"
+        :default-active="currentActiveMenuIndex"
         class="el-menu-vertical"
         active-text-color="#ffd04b"
         background-color="#001529"
@@ -130,6 +130,10 @@ const handleItemClick = (subMenu: UserMenus) => {
       padding-left: 50px !important;
       background-color: @side-lighten-bg-color !important;
       &:hover {
+        background-color: #2c3e50 !important;
+      }
+      .is-active {
+        background-color: #2c3e50 !important;
       }
     }
   }

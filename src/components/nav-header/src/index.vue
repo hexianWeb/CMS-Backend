@@ -5,13 +5,9 @@
       <el-icon @click="handleFoldClick" :size="30">
         <component :is="isFold ? 'Expand' : 'Fold'"></component>
       </el-icon>
+      <!-- 面包屑 -->
       <div class="brand">
-        <el-breadcrumb separator="/">
-          <el-breadcrumb-item :to="{ path: '/' }">homepage</el-breadcrumb-item>
-          <el-breadcrumb-item><a href="/">promotion management</a></el-breadcrumb-item>
-          <el-breadcrumb-item>promotion list</el-breadcrumb-item>
-          <el-breadcrumb-item>promotion detail</el-breadcrumb-item>
-        </el-breadcrumb>
+        <breadComponent :breadCrumbs="breadcrumbs"></breadComponent>
       </div>
     </div>
 
@@ -33,13 +29,38 @@
   </div>
 </template>
 <script setup lang="ts" name="nav-header">
-//使用defineEmits代替$emit
-const emit = defineEmits(['foldClick']); //这里最好写出来
-const isFold = ref<Boolean>(false);
+import breadComponent, { BreadcrumbProp } from '@/base-ui/breadcrumb/index';
+import { useUserStore } from '@/stores/modules/login';
+import { getBreadCrumbsByPath } from '@/utils/menu';
 
+const route = useRoute();
+
+// 伸缩栏页面逻辑
+const emit = defineEmits(['foldClick']);
+const isFold = ref<Boolean>(false);
 const handleFoldClick = () => {
   isFold.value = !isFold.value;
   emit('foldClick', isFold.value);
+};
+
+// 面包屑页面逻辑
+const breadcrumbs = ref<BreadcrumbProp[]>([]);
+const userStore = useUserStore();
+const menus = userStore.getUserMenus;
+
+// watch 监控路径变化 修改面包屑
+watch(
+  () => route.path,
+  () => {
+    setBreadCrumb();
+  }
+);
+
+onMounted(() => {
+  setBreadCrumb();
+});
+const setBreadCrumb = () => {
+  breadcrumbs.value = getBreadCrumbsByPath(menus, route.path);
 };
 </script>
 <style lang="less" scoped>

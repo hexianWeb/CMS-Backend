@@ -4,7 +4,9 @@
     <el-form :label-position="labelPosition" :label-width="labelWidth" :inline="true" size="default">
       <el-row>
         <template v-for="option in formOptions" :key="option.label">
-          <form-base v-bind="option" v-model="formModel[`${option.field}`]"></form-base>
+          <el-row v-bind="option.colLayout || colLayout">
+            <form-base v-bind="option" v-model="formModel[`${option.field}`]"></form-base>
+          </el-row>
         </template>
       </el-row>
     </el-form>
@@ -17,6 +19,7 @@
   </div>
 </template>
 <script setup lang="ts">
+import { IFormItemProps } from '../types/formItemType';
 import formBase from './formBase.vue';
 const emit = defineEmits(['reset', 'query', 'formChange']);
 const props = defineProps({
@@ -29,18 +32,28 @@ const props = defineProps({
     default: () => 'right'
   },
   formOptions: {
-    type: Array as PropType<any[]>,
+    type: Array as PropType<IFormItemProps[]>,
     required: true
+  },
+  colLayout: {
+    type: Object,
+    default: () => ({
+      xl: 6,
+      lg: 8,
+      md: 12,
+      sm: 24,
+      xs: 24
+    })
   }
 });
 
 // 或者在根作用域中使用解构语法将 props 赋值给一个新变量
-const formOptions: any = toRef(props, 'formOptions');
+// const formOptions: any = toRef(props, 'formOptions');
 const formData: any = {};
 
 // 如何解决此类问题
 // eslint-disable-next-line vue/no-setup-props-destructure
-// const formOptions: any[] = props.formOptions;
+const formOptions: any[] = props.formOptions;
 
 for (let option of formOptions) {
   formData[`${option.field}`] = option.defaultFieldValue;
