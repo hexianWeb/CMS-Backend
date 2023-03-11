@@ -22,5 +22,7 @@ const props = defineProps({
     required: true
   }
 });
+// 保证数据单项流
+const breadCrumbs = computed(() => props.breadCrumbs!);
 </script>
 <style lang="less" scoped></style>

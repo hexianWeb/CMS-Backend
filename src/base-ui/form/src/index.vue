@@ -1,5 +1,11 @@
 <template>
   <div class="content-wrapper">
+    <div class="header-wrapper">
+      <el-icon><Search /></el-icon>
+      <span class="text">
+        <slot name="header"> </slot>
+      </span>
+    </div>
     <!-- 表单空间 -->
     <el-form :label-position="labelPosition" :label-width="labelWidth" :inline="true" size="default">
       <el-row>
@@ -81,13 +87,26 @@ watch(formModel, (newValue: any) => {
 });
 </script>
 <style lang="less" scoped>
+@import '@/assets/css/_var.less';
 .content-wrapper {
   background-color: #fff;
   padding: 12px 0;
   border-radius: 12px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-}
-.footer {
-  margin-right: 25px;
+  .header-wrapper {
+    // text-align: left;
+    margin: 12px;
+    display: flex;
+    justify-content: start;
+    align-items: stretch;
+    color: @info-text-color;
+    .text {
+      font-weight: 550;
+      padding-left: 10px;
+    }
+  }
+  .footer {
+    margin-right: 25px;
+  }
 }
 </style>

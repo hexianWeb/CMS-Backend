@@ -19,4 +19,12 @@ export interface Result<T = any> {
   data: T;
 }
 
+// 所有table都要接受收的类型
+/**
+ * 请求Params中都需要的offset/size的父类接口
+ */
+export interface ParamsPagination {
+  offset: number;
+  size: number;
+}
 export { RequestInterceptors, RequestConfig };
