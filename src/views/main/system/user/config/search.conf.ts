@@ -13,12 +13,12 @@ const formData = {
       field: 'name',
       placeHolder: '请输入用户名'
     },
-    // {
-    //   label: '真实姓名',
-    //   type: 'input',
-    //   field: 'realname',
-    //   placeHolder: '请输入真实姓名'
-    // },
+    {
+      label: '真实姓名',
+      type: 'input',
+      field: 'realname',
+      placeHolder: '请输入真实姓名'
+    },
     {
       label: '电话号码',
       type: 'input',

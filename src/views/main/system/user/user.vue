@@ -5,7 +5,7 @@
       <template #header>用户管理 </template>
     </fromComponent>
     <!-- 表格渲染模块 -->
-    <TableComponent v-bind:options="tableOptionsRef" @selectOptions="getSelectOptions">
+    <TableComponent :options="tableOptionsRef" @selectOptions="getSelectOptions">
       <template #status="scope">
         <el-button plain :type="scope.row.enable ? 'success' : 'danger'" size="small">
           {{ $filter.getStatus(scope.row.enable) }}
@@ -37,25 +37,56 @@ import tableOptions from './config/table.conf';
 
 const tableOptionsRef = ref(tableOptions);
 
-//
-// 生命周期
+// tableOptions的处理
+tableOptions.header.handleOption.handleNewClick = () => {
+  console.log('载入user 新增用户');
+};
+tableOptions.header.handleOption.handleRefresh = () => {
+  tableOptionsRef.value.content.dataSource = [];
+  getUserListData();
+};
+tableOptions.footer.sizeChange = (size: number) => {
+  tableOptionsRef.value.footer.pageSize = size;
+};
+tableOptions.footer.currentChange = (currentPage: number) => {
+  tableOptionsRef.value.footer.currentPage = currentPage;
+};
 onMounted(() => {
   getUserListData();
 });
 
 const queryData = (queryInfo: any) => {
-  console.log(queryInfo);
+  getUserListData(queryInfo);
 };
 
 const resetData = () => {
-  console.log('重置');
+  getUserListData();
 };
+const pageOptions = computed({
+  get() {
+    return tableOptionsRef.value.footer;
+  },
+  set(newValue) {
+    tableOptionsRef.value.footer = newValue;
+  }
+});
+watch(
+  () => pageOptions,
+  () => {
+    getUserListData();
+  },
+  {
+    deep: true
+  }
+);
 const getUserListData = (queryInfo: any = {}) => {
-  let pageSize = 10;
-  let currentPage = 0;
+  let pageSize = tableOptionsRef.value.footer.pageSize || 10;
+  let currentPage = tableOptionsRef.value.footer.currentPage || 0;
   const offset = pageSize * currentPage;
   getUserList({ offset: offset, size: pageSize, ...queryInfo }).then((res) => {
+    console.log(res);
     tableOptionsRef.value.content.dataSource = res.list;
+    tableOptionsRef.value.footer.total = res.totalCount;
   });
 };
 // 获取选择Options

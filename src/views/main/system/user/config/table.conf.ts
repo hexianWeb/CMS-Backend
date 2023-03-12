@@ -39,12 +39,12 @@ const tableOptions = {
       },
       {
         label: '创建时间',
-        minWidth: '280',
+        minWidth: '250',
         slotName: 'createAt'
       },
       {
         label: '更新时间',
-        minWidth: '280',
+        minWidth: '250',
         slotName: 'updateAt'
       },
       {
@@ -56,7 +56,7 @@ const tableOptions = {
   },
   footer: {
     currentPage: 0,
-    pageSizes: [10, 20, 30],
+    pageSizes: [5, 10],
     pageSize: 10,
     total: 0,
     sizeChange: (size: number) => {
