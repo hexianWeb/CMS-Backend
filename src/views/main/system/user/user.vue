@@ -30,8 +30,8 @@
 <script lang="ts" setup>
 import fromComponent from '@/base-ui/form/index';
 import TableComponent from '@/base-ui/table';
-import { getUserList } from '@/service/main/user';
-import { NewUserInfo } from '@/service/main/user/types';
+import { getUserList } from '@/service/main/system/user';
+import { NewUserInfo } from '@/service/main/system/user/types';
 import searchConfig from './config/search.conf';
 import tableOptions from './config/table.conf';
 

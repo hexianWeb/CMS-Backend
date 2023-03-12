@@ -33,7 +33,7 @@
 <script lang="ts" setup>
 import fromComponent from '@/base-ui/form';
 import TableComponent from '@/base-ui/table';
-import { getRoleList } from '@/service/main/role';
+import { getRoleList } from '@/service/main/system/role';
 import searchConfig from './config/search.conf';
 import tableOptions from './config/table.conf';
 
