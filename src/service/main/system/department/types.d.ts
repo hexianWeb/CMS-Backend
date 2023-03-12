@@ -1,3 +1,3 @@
-import { ParamsPagination } from '/@/service/types'
+import { ParamsPagination } from '/@/service/types';
 
 export interface GetDepartmentListParams extends ParamsPagination {}
