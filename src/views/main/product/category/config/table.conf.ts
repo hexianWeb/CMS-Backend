@@ -1,8 +1,8 @@
 const tableOptions = {
   header: {
-    title: '部门列表',
+    title: '类别列表',
     handleOption: {
-      title: '新建部门',
+      title: '新建类别',
       icon: 'HelpFilled',
       handleNewClick: () => {
         console.log('新建用户角色列表');
@@ -19,17 +19,7 @@ const tableOptions = {
     columns: [
       {
         prop: 'name',
-        label: '部门名称',
-        minWidth: '100'
-      },
-      {
-        prop: 'leader',
-        label: '权限介绍',
-        minWidth: '100'
-      },
-      {
-        prop: 'parentId',
-        label: '上级部门',
+        label: '类别名称',
         minWidth: '100'
       },
       {
