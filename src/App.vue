@@ -17,4 +17,13 @@ import zhCn from 'element-plus/dist/locale/zh-cn.mjs';
   color: #2c3e50;
   margin-top: 60px;
 }
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
 </style>

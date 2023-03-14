@@ -11,7 +11,13 @@
           <navHeader @foldClick="handleFoldClick" />
         </el-header>
         <el-container class="page-content">
-          <el-main><RouterView></RouterView></el-main>
+          <el-main>
+            <router-view v-slot="{ Component }">
+              <transition appear mode="out-in">
+                <component :is="Component" />
+              </transition>
+            </router-view>
+          </el-main>
         </el-container>
       </el-container>
     </el-container>
@@ -74,5 +80,16 @@ const handleFoldClick = (isFold: Boolean) => {
     text-align: center;
     background-color: #f0f2f5;
   }
+}
+
+/* 下面我们会解释这些 class 是做什么的 */
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
 }
 </style>

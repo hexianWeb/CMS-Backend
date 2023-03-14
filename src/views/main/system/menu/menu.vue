@@ -1,6 +1,6 @@
 <template>
   <div class="menu">
-    <h2>menu</h2>
+    <el-empty description="敬请期待好吧" />
   </div>
 </template>
 
